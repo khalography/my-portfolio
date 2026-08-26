@@ -39,7 +39,7 @@ export default function EditorialCaseStudy() {
                   {featuredCaseStudy.title}
                 </h3>
                 <p className="text-xs font-sans text-[#c8a97e] uppercase tracking-wider font-medium">
-                  {featuredCaseStudy.role} • {featuredCaseStudy.domain}
+                  {featuredCaseStudy.role}
                 </p>
               </div>
 
