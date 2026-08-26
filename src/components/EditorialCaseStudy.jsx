@@ -129,7 +129,6 @@ export default function EditorialCaseStudy() {
             {/* Role Metadata Footer */}
             <div className="pt-4 border-t border-editorial flex items-center justify-between text-xs font-mono text-gray-400">
               <span>Focus: AI Automation & Client Delivery</span>
-              <span className="text-[#c8a97e]">2025 – 2026</span>
             </div>
 
           </div>
