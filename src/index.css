@@ -1,0 +1,161 @@
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap');
+
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+    background-color: #0c0c0e;
+    color: #f4f1ea;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  body {
+    overflow-x: hidden;
+    background-color: #0c0c0e;
+    color: #f4f1ea;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  /* Custom Serif Typography Utilities */
+  .font-serif-display {
+    font-family: 'Instrument Serif', Georgia, serif;
+  }
+}
+
+/* Custom Editorial Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #0c0c0e;
+}
+::-webkit-scrollbar-thumb {
+  background: #232328;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #c8a97e;
+}
+
+/* Subtle Editorial Border & Card Utilities */
+.border-editorial {
+  border-color: rgba(244, 241, 234, 0.08);
+}
+.border-editorial-accent {
+  border-color: rgba(200, 169, 126, 0.3);
+}
+
+.bg-editorial-card {
+  background-color: #121215;
+}
+.bg-editorial-subcard {
+  background-color: rgba(12, 12, 14, 0.8);
+}
+
+.bg-editorial-hover {
+  transition: all 0.3s ease;
+}
+.bg-editorial-hover:hover {
+  background-color: #16161a;
+  border-color: rgba(200, 169, 126, 0.25);
+}
+
+/* --- LIGHT MODE EDITORIAL THEME OVERRIDES --- */
+html.light {
+  color-scheme: light;
+  background-color: #f7f5f0 !important;
+  color: #121215 !important;
+}
+
+html.light body {
+  background-color: #f7f5f0 !important;
+  color: #121215 !important;
+}
+
+/* Header Override */
+html.light header {
+  background-color: rgba(247, 245, 240, 0.94) !important;
+  border-color: rgba(18, 18, 21, 0.12) !important;
+}
+
+html.light section {
+  background-color: #f7f5f0 !important;
+  border-color: rgba(18, 18, 21, 0.1) !important;
+}
+
+/* Card & Box Overrides in Light Mode */
+html.light .bg-editorial-card {
+  background-color: #ffffff !important;
+  border-color: rgba(18, 18, 21, 0.12) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04) !important;
+}
+
+html.light .bg-editorial-subcard {
+  background-color: #f2efe9 !important;
+  border-color: rgba(18, 18, 21, 0.1) !important;
+}
+
+/* Text Color Overrides in Light Mode */
+html.light .text-white,
+html.light .text-gray-100,
+html.light .text-gray-200 {
+  color: #121215 !important;
+}
+
+html.light .text-gray-300,
+html.light .text-gray-400 {
+  color: #3e3e44 !important;
+}
+
+html.light .text-gray-500,
+html.light .text-gray-600 {
+  color: #6a6a72 !important;
+}
+
+html.light .text-\[\#c8a97e\] {
+  color: #966e38 !important;
+}
+
+html.light .border-editorial {
+  border-color: rgba(18, 18, 21, 0.12) !important;
+}
+
+html.light .border-editorial-accent {
+  border-color: rgba(150, 110, 56, 0.4) !important;
+}
+
+/* --- CV MODAL LIGHT MODE OVERRIDES --- */
+html.light .cv-modal-sheet {
+  background-color: #ffffff !important;
+  color: #121215 !important;
+  border-color: rgba(18, 18, 21, 0.2) !important;
+}
+
+html.light .cv-modal-header {
+  background-color: #f2efe9 !important;
+  border-color: rgba(18, 18, 21, 0.12) !important;
+}
+
+html.light .cv-modal-print-btn {
+  background-color: #121215 !important;
+  color: #ffffff !important;
+}
+
+html.light .cv-modal-print-btn:hover {
+  background-color: #966e38 !important;
+  color: #ffffff !important;
+}
+
+html.light .cv-modal-close-btn {
+  color: #3e3e44 !important;
+}
+
+html.light .cv-modal-close-btn:hover {
+  color: #121215 !important;
+}
