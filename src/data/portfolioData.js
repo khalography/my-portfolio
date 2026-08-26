@@ -81,7 +81,7 @@ export const capabilityBreakdown = {
     {
       number: "01",
       title: "Design & Build",
-      description: "This site's frontend was designed and built using AI development tools (Claude, Antigravity, ChatGPT, Google AI Studio) in a single continuous session rather than hand-coded from scratch.",
+      description: "This site's frontend was designed and built using AI development tools (Claude and Antigravity IDE) in a single continuous session rather than hand-coded from scratch.",
       meta: "Step 01 • Design & Code"
     },
     {
