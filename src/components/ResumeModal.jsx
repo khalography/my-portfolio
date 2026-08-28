@@ -60,7 +60,7 @@ export default function ResumeModal({ isOpen, onClose }) {
                 </h4>
                 <div className="text-xs text-gray-300 space-y-1 font-light">
                   <p>Lagos, Nigeria</p>
-                  <p className="font-mono">08153137879</p>
+                  <p className="font-mono">08153137879 / 08168371434</p>
                   <p className="font-mono">qazeemibraheem@gmail.com</p>
                   <p className="font-mono text-[#c8a97e]">x.com/restnett</p>
                 </div>
