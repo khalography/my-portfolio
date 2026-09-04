@@ -100,17 +100,22 @@ export const capabilityBreakdown = {
 };
 
 export const featuredCaseStudy = {
-  id: "onchainmutineers",
-  title: "Onchainmutineers",
-  url: "https://onchainmutineers.site",
-  domain: "onchainmutineers.site",
+  id: "circuitbreakers",
+  title: "Circuit Breakers",
+  url: "https://www.circuitbreakersrh.xyz/",
+  domain: "circuitbreakersrh.xyz",
   role: "End-to-End Creator & Deployer",
-  context: "A live, deployed Web3 project website I built and launched end-to-end to establish a home for the Mutineers digital collectible collection.",
-  execution: "Handled domain registration, custom dark web3 layout design, NFT gallery integration, and edge deployment to Vercel.",
-  impact: "Operational live site serving community members and showcasing digital collectibles on-chain.",
+  context: "A live, deployed Web3 platform I built and launched end-to-end for the Circuit Breakers digital collectible collection.",
+  execution: "Managed domain acquisition, edge DNS routing, AI-assisted frontend development, and production deployment.",
+  impact: "Operational live site serving community members and showcasing the Circuit Breakers digital collection on-chain.",
 };
 
 export const otherWorks = [
+  {
+    title: "Onchainmutineers",
+    subtitle: "Web3 Community Portal & Digital Collectibles",
+    url: "https://onchainmutineers.site"
+  },
   {
     title: "Valuegain Global Services",
     subtitle: "Professional Accounting & Audit Services",

@@ -1,6 +1,6 @@
 import React from 'react';
 import { ExternalLink, ArrowUpRight } from 'lucide-react';
-import { featuredCaseStudy } from '../data/portfolioData';
+import { featuredCaseStudy, otherWorks } from '../data/portfolioData';
 
 export default function EditorialCaseStudy() {
   return (
@@ -25,7 +25,7 @@ export default function EditorialCaseStudy() {
         {/* 2 Compact Entries Side-by-Side Grid */}
         <div className="py-14 grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 items-stretch">
           
-          {/* Entry 01: Onchainmutineers Project */}
+          {/* Entry 01: Featured Web Build */}
           <div className="p-8 sm:p-10 bg-editorial-card border border-editorial flex flex-col justify-between space-y-8 hover:border-[#c8a97e]/30 transition-colors">
             
             <div className="space-y-6">
@@ -55,14 +55,14 @@ export default function EditorialCaseStudy() {
                 <div className="space-y-1 pt-2 border-t border-editorial">
                   <span className="text-[11px] font-sans font-semibold text-white uppercase tracking-wider block">Technical Execution:</span>
                   <p className="text-gray-300 font-light leading-relaxed">
-                    Acquired domain via standard registrar, configured edge DNS, engineered front and backend logic via AI-assisted tools, and deployed to Vercel.
+                    {featuredCaseStudy.execution}
                   </p>
                 </div>
 
                 <div className="space-y-1 pt-2 border-t border-editorial">
                   <span className="text-[11px] font-sans font-semibold text-white uppercase tracking-wider block">Concrete Outcome:</span>
                   <p className="text-gray-300 font-light leading-relaxed">
-                    A live, operational Web3 platform establishing the Mutineers collectible community portal.
+                    {featuredCaseStudy.impact}
                   </p>
                 </div>
               </div>
@@ -142,40 +142,26 @@ export default function EditorialCaseStudy() {
             <p className="text-xs font-sans text-gray-400 font-light">Additional live web platforms engineered and deployed.</p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full md:w-auto">
-            <a
-              href="https://valuegain.vercel.app/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-4 bg-editorial-card border border-editorial hover:border-[#c8a97e]/50 transition-all flex items-center justify-between gap-4 group rounded-none"
-            >
-              <div>
-                <span className="text-xs sm:text-sm font-sans font-medium text-white group-hover:text-[#c8a97e] transition-colors block">
-                  Valuegain Global Services
-                </span>
-                <span className="text-[11px] font-sans text-gray-400 block font-light">
-                  Professional Accounting & Audit Services
-                </span>
-              </div>
-              <ExternalLink className="w-4 h-4 text-gray-400 group-hover:text-[#c8a97e] shrink-0 transition-colors" />
-            </a>
-
-            <a
-              href="https://loading.ng/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-4 bg-editorial-card border border-editorial hover:border-[#c8a97e]/50 transition-all flex items-center justify-between gap-4 group rounded-none"
-            >
-              <div>
-                <span className="text-xs sm:text-sm font-sans font-medium text-white group-hover:text-[#c8a97e] transition-colors block">
-                  Loading Portal
-                </span>
-                <span className="text-[11px] font-sans text-gray-400 block font-light">
-                  Buy Data, Airtime & Pay Bills
-                </span>
-              </div>
-              <ExternalLink className="w-4 h-4 text-gray-400 group-hover:text-[#c8a97e] shrink-0 transition-colors" />
-            </a>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 w-full md:w-auto">
+            {otherWorks.map((work, idx) => (
+              <a
+                key={idx}
+                href={work.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-4 bg-editorial-card border border-editorial hover:border-[#c8a97e]/50 transition-all flex items-center justify-between gap-4 group rounded-none"
+              >
+                <div>
+                  <span className="text-xs sm:text-sm font-sans font-medium text-white group-hover:text-[#c8a97e] transition-colors block">
+                    {work.title}
+                  </span>
+                  <span className="text-[11px] font-sans text-gray-400 block font-light">
+                    {work.subtitle}
+                  </span>
+                </div>
+                <ExternalLink className="w-4 h-4 text-gray-400 group-hover:text-[#c8a97e] shrink-0 transition-colors" />
+              </a>
+            ))}
           </div>
         </div>
 
