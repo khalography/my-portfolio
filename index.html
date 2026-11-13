@@ -1,22 +1,576 @@
 <!doctype html>
-<html lang="en" class="light scroll-smooth">
+<html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/jpeg" href="/images/ibraheem-avatar.jpg" />
-    <link rel="apple-touch-icon" href="/images/ibraheem-avatar.jpg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Ibraheem Qazeem — AI Web Development & Automation</title>
-    <meta name="description" content="Personal portfolio of Ibraheem Qazeem, AI Automation Specialist & Web3 Strategist based in Lagos, Nigeria. Building custom Telegram bots, Web3 platforms, and AI-native web applications." />
-    
-    <!-- OpenGraph Meta Tags -->
-    <meta property="og:title" content="Ibraheem Qazeem — AI Automation Specialist" />
-    <meta property="og:description" content="AI Automation Specialist & Web3 Strategist (Lagos, Nigeria) | Custom Telegram Bots, Web3 Platforms & AI-Native Workflows." />
-    <meta property="og:image" content="/images/ibraheem-avatar.jpg" />
-    <meta name="twitter:card" content="summary_large_image" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Ibraheem Qazeem — Web Development & AI Automation</title>
+    <meta
+      name="description"
+      content="Ibraheem Qazeem builds business websites, AI automations, Telegram bots and Web3 platforms. Independent developer based in Lagos, Nigeria."
+    />
+    <meta name="theme-color" content="#0B0B0C" />
+    <link rel="canonical" href="https://ibraheemqazeem.vercel.app/" />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:title"
+      content="Ibraheem Qazeem — Web Development & AI Automation"
+    />
+    <meta
+      property="og:description"
+      content="Business websites, AI automations, Telegram bots and Web3 platforms. Based in Lagos, Nigeria."
+    />
+    <meta property="og:url" content="https://ibraheemqazeem.vercel.app/" />
+    <meta
+      property="og:image"
+      content="https://ibraheemqazeem.vercel.app/assets/portrait.jpg"
+    />
+    <meta name="twitter:card" content="summary" />
     <meta name="twitter:site" content="@restnett" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&family=Inter+Tight:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" href="assets/portrait.jpg" type="image/jpeg" />
+    <script type="module" src="/src/main.js"></script>
   </head>
-  <body class="bg-[#08090d] text-gray-100 font-sans antialiased selection:bg-cyan-500 selection:text-gray-950">
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <header class="header">
+      <div class="wrap nav">
+        <a class="brand" href="#" aria-label="Ibraheem Qazeem home"
+          ><img
+            class="brand-photo"
+            src="assets/portrait.jpg"
+            alt="Ibraheem Qazeem"
+            width="400"
+            height="400"
+            decoding="async"
+          /><span
+            >Ibraheem Qazeem<span class="brand-sub"
+              >WEB DEVELOPMENT & AI AUTOMATION
+              <span class="header-location">· Lagos, Nigeria</span></span
+            ></span
+          ></a
+        >
+        <nav aria-label="Main navigation" id="navigation">
+          <a href="#work">Work</a><a href="#services">Services</a
+          ><a href="#about">About</a
+          ><a class="nav-contact" href="#contact">Let’s talk </a>
+        </nav>
+        <button
+          class="menu"
+          aria-label="Open navigation"
+          aria-expanded="false"
+          aria-controls="navigation"
+        >
+          ☰
+        </button>
+      </div>
+    </header>
+    <main id="main">
+      <section class="hero wrap">
+        <div class="eyebrow">Web developer & AI automation specialist</div>
+        <h1>
+          Modern digital platforms.<br /><span>Intelligent automations.</span>
+        </h1>
+        <p>
+          I design and ship websites, AI workflows, and Telegram bots.<br
+            class="desktop-break"
+          />
+          From the first idea to a working product.
+        </p>
+        <div class="hero-actions">
+          <a class="button primary" href="#work">Explore my work</a
+          ><a class="hero-secondary" href="#contact">Start a project</a>
+        </div>
+      </section>
+      <section id="work" class="work-section" aria-labelledby="work-title">
+        <div class="wrap">
+          <div class="section-heading">
+            <div>
+              <div class="eyebrow">SELECTED WORK</div>
+              <h2 id="work-title">Ideas, made real.</h2>
+            </div>
+          </div>
+          <div class="work-grid">
+            <article class="work-card">
+              <a
+                class="project-visual fst-visual"
+                href="https://www.fstwatertank.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Visit FST Engineering website"
+                ><span class="visual-category">BUSINESS WEBSITE</span>
+                <div class="browser-frame">
+                  <div class="browser-bar">
+                    <span class="browser-dots">● ● ●</span
+                    ><span>fstwatertank.com</span>
+                  </div>
+                  <div class="fst-preview-nav">
+                    <strong>FST<span>ENGINEERING</span></strong
+                    ><span>About &nbsp; Products &nbsp; Contact</span>
+                  </div>
+                  <div class="fst-photo">
+                    <img
+                      src="assets/fst-water-tanks.webp"
+                      alt="Water tank installation from the FST Engineering project"
+                      width="1376"
+                      height="768"
+                      decoding="async"
+                      loading="lazy"
+                    />
+                    <div class="fst-photo-copy">
+                      <span>FST ENGINEERING</span>
+                      <h3>Hygienic Water Storage,<br />Built to Last.</h3>
+                      <span class="mini-cta">View products</span>
+                    </div>
+                  </div>
+                </div></a
+              >
+              <div class="project-info">
+                <span class="overline">BUSINESS WEBSITE</span>
+                <h3>FST Engineering</h3>
+                <p>
+                  A complete digital presence for a Nigerian supplier of fiber
+                  and steel water tanks.
+                </p>
+                <div class="scope">
+                  <span>MY ROLE</span>
+                  <p>
+                    Design & development, domain registration, deployment, and
+                    SEO.
+                  </p>
+                </div>
+                <details>
+                  <summary>Project details</summary>
+                  <div class="detail-content">
+                    <h4>Context</h4>
+                    <p>
+                      A clear, accessible showcase for water tank products and
+                      company expertise.
+                    </p>
+                    <h4>Delivery</h4>
+                    <p>
+                      Product specifications, installation galleries, and direct
+                      contact and quote-request links.
+                    </p>
+                  </div>
+                </details>
+                <a
+                  class="project-link"
+                  href="https://www.fstwatertank.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >Visit website <span aria-hidden="true">→</span></a
+                >
+              </div>
+            </article>
+            <article class="work-card">
+              <a
+                class="project-visual circuit-visual"
+                href="https://www.circuitbreakersrh.xyz/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Visit Circuit Breakers website"
+                ><span class="visual-category">WEB3 PLATFORM</span>
+                <div class="browser-frame">
+                  <div class="browser-bar">
+                    <span class="browser-dots">● ● ●</span
+                    ><span>circuitbreakersrh.xyz</span>
+                  </div>
+                  <div class="circuit-preview">
+                    <span class="circuit-brand">CIRCUIT BREAKERS</span>
+                    <h3>
+                      HALT THE MARKET.<br /><span>CLAIM THE SPREAD.</span>
+                    </h3>
+                    <img
+                      src="assets/circuit-breaker.webp"
+                      alt="Circuit Breakers mechanical device artwork"
+                      width="1024"
+                      height="1024"
+                      decoding="async"
+                      loading="lazy"
+                    /><span class="circuit-label"
+                      >MECHANICAL DIGITAL COLLECTIBLES</span
+                    >
+                  </div>
+                </div></a
+              >
+              <div class="project-info">
+                <span class="overline">WEB3 & DIGITAL COLLECTIBLES</span>
+                <h3>Circuit Breakers</h3>
+                <p>
+                  A live Web3 platform for the Circuit Breakers digital
+                  collectible collection.
+                </p>
+                <div class="scope">
+                  <span>MY ROLE</span>
+                  <p>
+                    Domain acquisition, DNS routing, frontend development, and
+                    deployment.
+                  </p>
+                </div>
+                <details>
+                  <summary>Project details</summary>
+                  <div class="detail-content">
+                    <h4>Context</h4>
+                    <p>A digital home for the collection and its community.</p>
+                    <h4>Delivery</h4>
+                    <p>
+                      An operational website showcasing the collection and
+                      connecting visitors to the project.
+                    </p>
+                  </div>
+                </details>
+                <a
+                  class="project-link"
+                  href="https://www.circuitbreakersrh.xyz/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >Visit website <span aria-hidden="true">→</span></a
+                >
+              </div>
+            </article>
+            <article class="work-card">
+              <a
+                class="project-visual valuegain-visual"
+                href="https://valuegain.vercel.app/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Visit Valuegain Global Services website"
+                ><span class="visual-category">PROFESSIONAL SERVICES</span>
+                <div class="browser-frame">
+                  <div class="browser-bar">
+                    <span class="browser-dots">● ● ●</span
+                    ><span>valuegain.vercel.app</span>
+                  </div>
+                  <div class="valuegain-preview">
+                    <img
+                      class="valuegain-bg"
+                      src="assets/valuegain-office.webp"
+                      alt="Office photography from the Valuegain website"
+                      width="857"
+                      height="1343"
+                      decoding="async"
+                      loading="lazy"
+                    />
+                    <div class="valuegain-content">
+                      <img
+                        src="assets/valuegain-logo.webp"
+                        alt="Valuegain"
+                        width="521"
+                        height="479"
+                        decoding="async"
+                        loading="lazy"
+                      />
+                      <h3>VALUEGAIN<span>GLOBAL SERVICES</span></h3>
+                      <p>
+                        Focus on your business.<br />Leave the accounting to us.
+                      </p>
+                      <span class="mini-cta">Get a free quote</span>
+                    </div>
+                  </div>
+                </div></a
+              >
+              <div class="project-info">
+                <span class="overline">PROFESSIONAL SERVICES WEBSITE</span>
+                <h3>Valuegain Global Services</h3>
+                <p>
+                  A business website for professional accounting, audit, and
+                  financial services.
+                </p>
+                <div class="scope">
+                  <span>MY ROLE</span>
+                  <p>Website development and deployment.</p>
+                </div>
+                <details>
+                  <summary>Project details</summary>
+                  <div class="detail-content">
+                    <h4>Context</h4>
+                    <p>
+                      A professional web presence for an accounting and audit
+                      services business.
+                    </p>
+                    <h4>Delivery</h4>
+                    <p>
+                      Company information, service pages, and a direct route for
+                      prospective clients to get in touch.
+                    </p>
+                  </div>
+                </details>
+                <a
+                  class="project-link"
+                  href="https://valuegain.vercel.app/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >Visit website <span aria-hidden="true">→</span></a
+                >
+              </div>
+            </article>
+          </div>
+          <div class="more-work">
+            <span>ALSO BUILT & DEPLOYED</span
+            ><a
+              href="https://onchainmutineers.site/"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Onchainmutineers <small>Web3 community portal</small></a
+            ><a
+              href="https://loading.ng/"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Loading Portal <small>Data, airtime & bill payments</small></a
+            >
+          </div>
+        </div>
+      </section>
+      <section
+        id="services"
+        class="services-section"
+        aria-labelledby="services-title"
+      >
+        <div class="wrap section">
+          <div class="section-heading">
+            <div>
+              <div class="eyebrow">CAPABILITIES</div>
+              <h2 id="services-title">What I build.</h2>
+            </div>
+          </div>
+          <div class="services-grid">
+            <article>
+              <span class="overline">01 / WEB DEVELOPMENT</span>
+              <h3>Web development.</h3>
+              <p>
+                Designing and shipping modern, content-first web applications
+                built for speed, clean typography, and effortless navigation.
+              </p>
+              <ul>
+                <li>
+                  Custom responsive React &amp; Next.js frontend web application
+                  interfaces
+                </li>
+                <li>AI-native backend logic &amp; API integration</li>
+                <li>
+                  Domain acquisition, DNS management &amp; Cloudflare security
+                </li>
+                <li>Deployment via Vercel / Netlify</li>
+              </ul>
+            </article>
+            <article>
+              <span class="overline">02 / AI & AUTOMATION</span>
+              <h3>AI & automation.</h3>
+              <p>
+                Architecting bespoke Telegram bots and multi-step automated
+                workflows to streamline community management, notifications,
+                user support, and operational triggers.
+              </p>
+              <ul>
+                <li>Telegram bots for communities, alerts &amp; support</li>
+                <li>
+                  Transaction alerts, whitelist checks &amp; event triggers
+                </li>
+                <li>AI agents</li>
+              </ul>
+            </article>
+            <article>
+              <span class="overline">03 / WEB3 & CONSULTING</span>
+              <h3>Web3 & consulting.</h3>
+              <p>
+                Handling launch infrastructure for digital collectible
+                collections, smart contract deployment, and minting dApps.
+              </p>
+              <p>
+                Helping startups, founders, and teams make sense of AI tooling,
+                cut wasted process, and move faster on execution.
+              </p>
+              <ul>
+                <li>Art metadata &amp; IPFS storage</li>
+                <li>Launch integration &amp; whitelist bots</li>
+                <li>AI tool selection &amp; guidance</li>
+                <li>Rapid prototyping &amp; idea validation</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </section>
+      <section class="section wrap process">
+        <div>
+          <div class="eyebrow">THE PROCESS</div>
+          <h2>From concept<br />to deployment.</h2>
+          <p>
+            One collaborator across the build, with the details connected from
+            start to finish.
+          </p>
+          <a class="text-link" href="#contact">Discuss a project</a>
+        </div>
+        <ol>
+          <li>
+            <span>01</span>
+            <div>
+              <h3>Understand the job</h3>
+              <p>
+                Start with your goals, your users, and what a useful result
+                looks like.
+              </p>
+            </div>
+          </li>
+          <li>
+            <span>02</span>
+            <div>
+              <h3>Design & build</h3>
+              <p>
+                Shape the experience, develop the functionality, and connect the
+                tools it needs.
+              </p>
+            </div>
+          </li>
+          <li>
+            <span>03</span>
+            <div>
+              <h3>Test & launch</h3>
+              <p>
+                Check the details, configure the domain, and take the finished
+                project live.
+              </p>
+            </div>
+          </li>
+        </ol>
+      </section>
+      <section id="about" class="about-section" aria-labelledby="about-title">
+        <div class="wrap section about-grid">
+          <div class="about-left">
+            <div class="eyebrow">BACKGROUND</div>
+            <h2 id="about-title">
+              Community experience.<br /><span>A technical perspective.</span>
+            </h2>
+            <div class="about-location">BASED IN LAGOS, NIGERIA</div>
+          </div>
+          <div class="about-copy">
+            <p class="lead">
+              I’m Ibraheem, an independent web developer and AI automation
+              specialist with a background in community building.
+            </p>
+            <p>
+              Before moving into AI-native development, I spent four years
+              building and growing online communities, running collaborations,
+              negotiating allocations, and building opportunities for members. I
+              also grew Ritualnet’s X community from 5 to over 2,000 members and
+              hosted weekly X Spaces.
+            </p>
+            <p>
+              That experience, alongside a Master’s in International Studies and
+              Diplomacy, shapes the way I work: understand the people, connect
+              the moving parts, and follow through on delivery.
+            </p>
+            <div class="experience">
+              <span>RECENT EXPERIENCE</span
+              ><strong>AI Lead · Safaari Hub</strong
+              ><span>2025–2026 · AI automation & client delivery</span>
+            </div>
+            <a
+              href="assets/Ibraheem-Qazeem-CV.pdf"
+              download="Ibraheem-Qazeem-CV.pdf"
+              class="text-link"
+              >Get my full CV
+            </a>
+          </div>
+        </div>
+      </section>
+      <section class="tools wrap">
+        <span class="overline">TOOLS I BUILD WITH</span>
+        <p>
+          <span>Claude</span><span>ChatGPT</span><span>Google AI Studio</span
+          ><span>Perplexity</span><span>Vercel</span><span>Telegram</span
+          ><span>React</span><span>Next.js</span><span>Python</span
+          ><span>Node.js</span>
+        </p>
+      </section>
+      <section
+        id="contact"
+        class="contact-section"
+        aria-labelledby="contact-title"
+      >
+        <div class="wrap">
+          <div class="contact-top">
+            <div class="eyebrow">START A CONVERSATION</div>
+          </div>
+          <h2 id="contact-title">Let’s build<br />something useful.</h2>
+          <div class="contact-bottom">
+            <div class="conversation-options">
+              <div class="contact-icons">
+                <a
+                  class="contact-social gmail-link"
+                  href="mailto:qazeemibraheem@gmail.com"
+                  aria-label="Email Ibraheem at qazeemibraheem@gmail.com"
+                  title="qazeemibraheem@gmail.com"
+                  ><svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                    focusable="false"
+                  >
+                    <path
+                      fill="#4285F4"
+                      d="M2 20h4V9L0 4.5V18a2 2 0 0 0 2 2Z"
+                    />
+                    <path fill="#34A853" d="M18 20h4a2 2 0 0 0 2-2V4.5L18 9Z" />
+                    <path fill="#EA4335" d="M6 9v-5l6 4.5L18 4v5l-6 4.5Z" />
+                    <path
+                      fill="#FBBC04"
+                      d="M18 4v5l6-4.5V3a2 2 0 0 0-3.2-1.6Z"
+                    />
+                    <path
+                      fill="#C5221F"
+                      d="M0 3v1.5L6 9V4L3.2 1.4A2 2 0 0 0 0 3Z"
+                    /></svg></a
+                ><a
+                  class="contact-social whatsapp-link"
+                  href="https://wa.me/2348153137879"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Start a WhatsApp conversation with Ibraheem"
+                  title="WhatsApp"
+                  ><svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                    focusable="false"
+                  >
+                    <path
+                      fill="currentColor"
+                      d="M20.52 3.48A11.86 11.86 0 0 0 12.05 0C5.46 0 .1 5.35.1 11.94c0 2.1.55 4.16 1.6 5.98L0 24l6.24-1.64a11.94 11.94 0 0 0 5.8 1.48h.01C18.64 23.84 24 18.49 24 11.9c0-3.19-1.24-6.18-3.48-8.42ZM12.05 21.83a9.9 9.9 0 0 1-5.04-1.38l-.36-.21-3.7.97.99-3.6-.24-.37a9.87 9.87 0 0 1-1.51-5.3c0-5.48 4.46-9.94 9.95-9.94a9.86 9.86 0 0 1 7.03 2.92 9.87 9.87 0 0 1 2.91 7.03c0 5.48-4.46 9.94-9.94 9.94Zm5.45-7.44c-.3-.15-1.77-.87-2.05-.97-.27-.1-.47-.15-.67.15s-.77.97-.94 1.17c-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.67-2.07-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.18.2-.3.3-.5.1-.2.05-.37-.03-.52-.07-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.49s1.07 2.89 1.22 3.09c.15.2 2.1 3.2 5.08 4.49.71.31 1.27.49 1.7.62.71.23 1.36.2 1.87.12.57-.08 1.77-.72 2.02-1.42.25-.69.25-1.29.18-1.42-.08-.12-.28-.2-.58-.35Z"
+                    /></svg></a
+                ><a
+                  class="contact-social social-icon"
+                  href="https://x.com/restnett"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Ibraheem on X (@restnett)"
+                  title="X / @restnett"
+                  ><svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                    focusable="false"
+                  >
+                    <path
+                      fill="currentColor"
+                      d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.64 7.584H.472l8.6-9.835L0 1.154h7.594l5.243 6.932 6.064-6.933Zm-1.29 19.49h2.039L6.487 3.24H4.3l13.31 17.403Z"
+                    /></svg
+                ></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer class="wrap footer">
+      <a class="footer-name" href="#"
+        >Ibraheem Qazeem<span>WEB DEVELOPMENT & AI AUTOMATION</span></a
+      ><span>© <span id="year">2026</span> Ibraheem Qazeem</span
+      ><a href="#">Back to top </a>
+    </footer>
   </body>
 </html>

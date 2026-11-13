@@ -1,16 +1,33 @@
-# React + Vite
+# Ibraheem Qazeem — Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+A responsive portfolio for web development, AI automation and Web3 work. Built with Vite, semantic HTML and plain CSS. JavaScript handles mobile navigation and active navigation links; project details use native HTML disclosure controls.
 
-Currently, two official plugins are available:
+## Development
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Use Node.js 22.12+ or 20.19+.
 
-## React Compiler
+```sh
+npm ci
+npm run dev
+```
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Checks and production
 
-## Expanding the Oxlint configuration
+```sh
+npm run lint
+npm run build
+npm run preview
+```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+Vite writes the production site to `dist/`. Vercel can use the Vite framework preset, `npm run build` and the `dist` output directory. No environment variables or backend services are required.
+
+## Editing
+
+- `index.html`: page content, project links, metadata and accessible contact icons.
+- `src/styles.css`: design tokens, section styles and responsive breakpoints.
+- `src/main.js`: mobile menu and active hash navigation.
+- `public/assets/`: local project imagery, portrait and downloadable CV.
+
+Keep project images local, retain meaningful alternative text and update the PDF in `public/assets/Ibraheem-Qazeem-CV.pdf` when the CV changes. Project previews are styled presentations using project imagery, rather than live embeds.
+
+The layout uses three project columns on desktop, stacks cards at tablet widths, and checks for reduced motion. Fonts load from Google Fonts with local serif and sans-serif fallbacks.
