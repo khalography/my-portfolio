@@ -212,6 +212,20 @@ dt {
 .project {
   min-width: 0;
 }
+@media (prefers-reduced-motion: no-preference) {
+  .project-reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition:
+      opacity 0.65s ease,
+      transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .project-reveal.is-visible,
+  .project-reveal:focus-within {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 .project-image {
   height: 420px;
   overflow: hidden;

@@ -72,3 +72,32 @@ for (const form of document.querySelectorAll(".project-form")) {
     window.location.assign(compose.href);
   });
 }
+
+// Keep cards visible without JavaScript or when reduced motion is requested.
+const projectCards = document.querySelectorAll(".project-grid .project");
+const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+let projectObserver;
+
+function configureProjectMotion() {
+  projectObserver?.disconnect();
+  for (const card of projectCards) {
+    card.classList.remove("project-reveal", "is-visible");
+  }
+  if (reducedMotion.matches || !("IntersectionObserver" in window)) return;
+
+  projectObserver = new IntersectionObserver(
+    (entries) => {
+      for (const entry of entries) {
+        entry.target.classList.toggle("is-visible", entry.isIntersecting);
+      }
+    },
+    { threshold: 0, rootMargin: "0px 0px -24px 0px" },
+  );
+  for (const card of projectCards) {
+    card.classList.add("project-reveal");
+    projectObserver.observe(card);
+  }
+}
+
+configureProjectMotion();
+reducedMotion.addEventListener("change", configureProjectMotion);
