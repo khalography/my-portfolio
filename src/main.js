@@ -45,7 +45,7 @@ document.addEventListener("keydown", (event) => {
   }
 });
 
-// The contact form composes an email; it does not submit to a backend.
+// Gmail opens a draft for the visitor to review and send; no delivery is implied.
 for (const form of document.querySelectorAll(".project-form")) {
   form.addEventListener("submit", (event) => {
     event.preventDefault();
@@ -61,6 +61,14 @@ for (const form of document.querySelectorAll(".project-form")) {
       "",
       fields.get("message"),
     ].join("\n");
-    window.location.href = `mailto:qazeemibraheem@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    const compose = new URL("https://mail.google.com/mail/");
+    compose.search = new URLSearchParams({
+      view: "cm",
+      fs: "1",
+      to: "qazeemibraheem@gmail.com",
+      su: subject,
+      body,
+    }).toString();
+    window.location.assign(compose.href);
   });
 }

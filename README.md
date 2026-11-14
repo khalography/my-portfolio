@@ -28,11 +28,11 @@ Vite builds all eight HTML entries into `dist/`. The Vercel Vite preset uses `np
 - `work/*/index.html`: four individual case studies.
 - `about/index.html` and `contact/index.html`: standalone pages.
 - `src/styles.css`: typography, layouts, responsive rules and menu presentation.
-- `src/main.js`: accessible mobile navigation and email-draft composition.
+- `src/main.js`: accessible mobile navigation and Gmail-draft composition.
 - `public/assets/`: local images and downloadable CV.
 - `vite.config.js`: explicit multi-page build entries.
 
-The contact forms validate required fields and open a prefilled draft in the visitor's email app. They do not claim to send through a backend. Replace `public/assets/Ibraheem-Qazeem-CV.pdf` when the CV changes.
+The contact forms validate required fields and open a prefilled Gmail draft for the visitor to review and send. They do not claim to send through a backend. Replace `public/assets/Ibraheem-Qazeem-CV.pdf` when the CV changes.
 
 All small-screen menus use text controls, lock background scrolling while open, and support Escape and keyboard navigation. Hover effects follow the approved design: navy hero action and menu links, unchanged outlined action and email. Motion is disabled when requested by the visitor's system settings.
 
