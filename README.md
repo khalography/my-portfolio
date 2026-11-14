@@ -1,6 +1,6 @@
 # Ibraheem Qazeem — Portfolio
 
-A responsive portfolio for web development, AI automation and Web3 work. Built with Vite, semantic HTML and plain CSS. JavaScript handles mobile navigation and active navigation links; project details use native HTML disclosure controls.
+A responsive multi-page portfolio built with Vite, semantic HTML and CSS. No client framework or backend is required.
 
 ## Development
 
@@ -11,7 +11,7 @@ npm ci
 npm run dev
 ```
 
-## Checks and production
+## Check and build
 
 ```sh
 npm run lint
@@ -19,15 +19,21 @@ npm run build
 npm run preview
 ```
 
-Vite writes the production site to `dist/`. Vercel can use the Vite framework preset, `npm run build` and the `dist` output directory. No environment variables or backend services are required.
+Vite builds all eight HTML entries into `dist/`. The Vercel Vite preset uses `npm run build` and the `dist` output directory. No environment variables are needed.
 
-## Editing
+## Source map
 
-- `index.html`: page content, project links, metadata and accessible contact icons.
-- `src/styles.css`: design tokens, section styles and responsive breakpoints.
-- `src/main.js`: mobile menu and active hash navigation.
-- `public/assets/`: local project imagery, portrait and downloadable CV.
+- `index.html`: homepage, selected work, About and contact form.
+- `work/index.html`: project index.
+- `work/*/index.html`: four individual case studies.
+- `about/index.html` and `contact/index.html`: standalone pages.
+- `src/styles.css`: typography, layouts, responsive rules and menu presentation.
+- `src/main.js`: accessible mobile navigation and email-draft composition.
+- `public/assets/`: local images and downloadable CV.
+- `vite.config.js`: explicit multi-page build entries.
 
-Keep project images local, retain meaningful alternative text and update the PDF in `public/assets/Ibraheem-Qazeem-CV.pdf` when the CV changes. Project previews are styled presentations using project imagery, rather than live embeds.
+The contact forms validate required fields and open a prefilled draft in the visitor's email app. They do not claim to send through a backend. Replace `public/assets/Ibraheem-Qazeem-CV.pdf` when the CV changes.
 
-The layout uses three project columns on desktop, stacks cards at tablet widths, and checks for reduced motion. Fonts load from Google Fonts with local serif and sans-serif fallbacks.
+All small-screen menus use text controls, lock background scrolling while open, and support Escape and keyboard navigation. Hover effects follow the approved design: navy hero action and menu links, unchanged outlined action and email. Motion is disabled when requested by the visitor's system settings.
+
+Inter and JetBrains Mono load from Google Fonts, with system fallbacks. Project imagery stays local and below-the-fold images load lazily.
