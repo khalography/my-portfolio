@@ -65,7 +65,7 @@ for (const form of document.querySelectorAll(".project-form")) {
     compose.search = new URLSearchParams({
       view: "cm",
       fs: "1",
-      to: "qazeemibraheem@gmail.com",
+      to: "info@adekunle.space",
       su: subject,
       body,
     }).toString();
