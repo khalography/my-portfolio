@@ -1,4 +1,5 @@
 import "./styles.css";
+import "./chatbot.js";
 
 const menuButton = document.querySelector(".menu-toggle");
 const navigation = document.querySelector("#main-navigation");
