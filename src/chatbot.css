@@ -41,6 +41,13 @@
   outline-offset: 2px;
 }
 
+/* The hidden attribute must win over the display:flex below. Without this,
+   author CSS overrides the browser's default [hidden] rule and the panel
+   shows on page load and ignores the Close button. */
+.chatbot-panel[hidden] {
+  display: none;
+}
+
 .chatbot-panel {
   width: min(360px, calc(100vw - 32px));
   height: min(520px, calc(100dvh - 96px));
