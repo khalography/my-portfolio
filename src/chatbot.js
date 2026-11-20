@@ -1,13 +1,17 @@
 import "./chatbot.css";
 
 // Chatbot for adekunle.space.
-// Gemini is the primary brain: the bot sends the message to the Vercel
-// serverless function at /api/chat, which calls Gemini with a system prompt
-// that carries the knowledge base. The Gemini API key lives in Vercel env
-// vars and never appears in client-side code.
-// Keyword matching is the fallback: if the Gemini call fails for any reason
-// (no key set, API down, network error), the bot answers from the local
-// knowledge base below so the site never breaks.
+// Fully client-side: no server, no API key, no cost. The conversation never
+// leaves the visitor's browser.
+//
+// Grounding: the bot decides what the visitor wants in two steps. First it
+// checks BOOKING_PATTERNS, a list of phrases that mean "I want to start a
+// project", because keyword scoring alone gets this wrong. For example,
+// "I want to build a website for my business" scores higher on the website
+// intent ("website" + "site") than on booking ("i want"), so it would answer
+// with the website description instead of starting the booking flow. The
+// pre-check catches that first. Only if no booking pattern matches does it
+// fall through to keyword scoring against the knowledge base below.
 
 const WHATSAPP_NUMBER = "2348153137879";
 const EMAIL = "info@adekunle.space";
@@ -94,7 +98,7 @@ const INTENTS = [
   },
   {
     id: "booking",
-    keywords: ["book", "start", "hire", "get started", "i want", "begin", "sign up", "work with you", "need a website", "need an agent", "need automation"],
+    keywords: ["book", "start", "hire", "get started", "begin", "sign up", "work with you", "need a website", "need an agent", "need automation"],
     answer: null,
   },
   {
@@ -153,6 +157,32 @@ function matchIntent(text) {
   return bestScore > 0 ? best : null;
 }
 
+// Phrases that mean the visitor wants to start a project, not just read
+// about a service. Checked before keyword scoring. Deliberately specific:
+// "I want to know the price" and "I'd like to know more" must NOT match,
+// because those are information questions, not bookings.
+const BOOKING_PATTERNS = [
+  /i want to (build|create|make|start|get|have|hire|launch|work|order)/,
+  /i want a (website|site|app|store|landing|web|online|shop)/,
+  /i need a (website|site|app|store|landing|web|online|shop)/,
+  /i need to (build|create|make|start|get|hire)/,
+  // Note: normalise() turns apostrophes into spaces, so "I'd" is "i d"
+  // and "let's" is "let s" by the time these are tested.
+  /i d like a (website|site|app|store|landing|web|online|shop)/,
+  /i d like to (build|create|make|start|hire|work)/,
+  /hire you/,
+  /start a project/,
+  /get started/,
+  /can you (build|create|make|design)/,
+  /build me (a|an)/,
+  /let s (start|work|build)/,
+];
+
+function isBookingIntent(text) {
+  const clean = normalise(text);
+  return BOOKING_PATTERNS.some((pattern) => pattern.test(clean));
+}
+
 function buildWhatsAppLink(name, service, message) {
   const lines = [
     `Hello Adekunle, my name is ${name}.`,
@@ -168,28 +198,6 @@ function buildMailtoLink(name, service, message) {
   const subject = `Project enquiry: ${service}`;
   const body = [`Name: ${name}`, `Service: ${service}`, "", message || ""].join("\n");
   return `mailto:${EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-}
-
-// Ask Gemini through the Vercel serverless function. Returns
-// { reply, action } or null when the call fails for any reason, in which
-// case the caller falls back to keyword matching.
-async function askGemini(message, history) {
-  try {
-    const res = await fetch("/api/chat", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ message, history: history.slice(-10) }),
-    });
-    if (!res.ok) return null;
-    const data = await res.json();
-    if (typeof data.reply !== "string" || !data.reply.trim()) return null;
-    return {
-      reply: data.reply.trim(),
-      action: data.action === "start_booking" ? "start_booking" : "none",
-    };
-  } catch {
-    return null;
-  }
 }
 
 export function initChatbot() {
@@ -233,14 +241,6 @@ export function initChatbot() {
 
   // Booking flow state. null when idle, otherwise { step, name, service }.
   let booking = null;
-
-  // Conversation history sent to Gemini for context. Kept short.
-  const history = [];
-
-  function recordTurn(role, text) {
-    history.push({ role, text });
-    if (history.length > 20) history.splice(0, history.length - 20);
-  }
 
   function scrollToBottom() {
     messages.scrollTop = messages.scrollHeight;
@@ -358,27 +358,20 @@ export function initChatbot() {
     finishBooking(message);
   }
 
-  async function handleUserText(text) {
+  function handleUserText(text) {
     const clean = text.trim();
     if (!clean) return;
     addMessage(clean, "user");
-    recordTurn("user", clean);
     setChips([]);
     if (booking) {
       handleBookingAnswer(clean);
       return;
     }
-    // Gemini first: it understands intent, not just keywords. If the call
-    // fails for any reason, fall back to the local keyword answers.
-    const result = await askGemini(clean, history);
-    if (result) {
-      recordTurn("bot", result.reply);
-      if (result.action === "start_booking") {
-        botReply(result.reply, []);
-        startBooking();
-        return;
-      }
-      botReply(result.reply);
+    // Booking intent first: a visitor who says they want to build something
+    // is starting a project, not asking for a description. Only then fall
+    // through to keyword scoring.
+    if (isBookingIntent(clean)) {
+      startBooking();
       return;
     }
     const intent = matchIntent(clean);
@@ -387,11 +380,9 @@ export function initChatbot() {
       return;
     }
     if (intent && intent.answer) {
-      recordTurn("bot", intent.answer);
       botReply(intent.answer);
       return;
     }
-    recordTurn("bot", FALLBACK);
     botReply(FALLBACK);
   }
 
