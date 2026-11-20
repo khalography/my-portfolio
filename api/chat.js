@@ -97,7 +97,18 @@ export default async function handler(req, res) {
   }
 
   if (!geminiRes.ok) {
-    res.status(502).json({ error: "Gemini request failed" });
+    let detail = "";
+    try {
+      const errBody = await geminiRes.json();
+      detail = typeof errBody?.error?.message === "string" ? errBody.error.message : "";
+    } catch {
+      detail = "";
+    }
+    res.status(502).json({
+      error: "Gemini request failed",
+      status: geminiRes.status,
+      detail: detail || "No detail from Gemini",
+    });
     return;
   }
 
