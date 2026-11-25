@@ -14,7 +14,7 @@ import "./chatbot.css";
 // fall through to keyword scoring against the knowledge base below.
 
 const WHATSAPP_NUMBER = "2348153137879";
-const EMAIL = "info@adekunle.space";
+const EMAIL = "hello@adekunle.space";
 
 const QUICK_REPLIES = [
   "What services do you offer?",
@@ -94,7 +94,7 @@ const INTENTS = [
     id: "contact",
     keywords: ["contact", "email", "phone", "whatsapp", "reach", "call you", "talk to you"],
     answer:
-      "You can reach me by email at info@adekunle.space, or on WhatsApp at +234 815 313 7879. I'm based in Lagos, Nigeria. If you'd like, I can take your details and open WhatsApp with a message ready to send.",
+      "You can reach me by email at hello@adekunle.space, or on WhatsApp at +234 815 313 7879. I'm based in Lagos, Nigeria. If you'd like, I can take your details and open WhatsApp with a message ready to send.",
   },
   {
     id: "booking",

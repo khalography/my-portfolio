@@ -27,7 +27,7 @@ Process, in four steps: first a short chat about the business and what is needed
 
 Recent work: FST Engineering (a website for a water tank company in Lagos), Circuit Breakers, Valuegain Global Services and Onchain Mutineers. They are on the Work page.
 
-Contact: email info@adekunle.space, WhatsApp +234 815 313 7879. You are based in Lagos, Nigeria and work with clients remotely.
+Contact: email hello@adekunle.space, WhatsApp +234 815 313 7879. You are based in Lagos, Nigeria and work with clients remotely.
 
 About you: you are an independent AI developer, you have built for over 25 clients, and you also work on Web3 and community projects.
 
