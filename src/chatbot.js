@@ -442,7 +442,11 @@ export function initChatbot() {
       addMessage(api.reply, "bot");
       recordHistory("bot", api.reply);
       setChips(QUICK_REPLIES);
-      if (api.action === "start_booking") {
+      // Two ways into booking: the API's action, or the visitor's own words
+      // matching a booking pattern. The second one covers the model
+      // forgetting to set the action on a clear "I want a website". A plain
+      // question never matches a pattern, so it never starts booking here.
+      if (api.action === "start_booking" || isBookingIntent(clean)) {
         startBooking();
       }
       return;
