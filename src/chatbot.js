@@ -1,17 +1,23 @@
 import "./chatbot.css";
 
 // Chatbot for adekunle.space.
-// Fully client-side: no server, no API key, no cost. The conversation never
-// leaves the visitor's browser.
+// The bot tries the serverless API first (POST /api/chat, backed by Groq via
+// the LLM_PROVIDER switch in api/chat.js) and falls back to the grounded
+// client-side replies below whenever the API is unreachable, slow, or
+// returns an error. The fallback needs no server and no key, so the bot
+// keeps answering even when the API is down. The conversation history sent
+// to the API is the last 10 turns only, and no API key ever reaches the
+// browser: the key lives in the serverless function's environment.
 //
-// Grounding: the bot decides what the visitor wants in two steps. First it
-// checks BOOKING_PATTERNS, a list of phrases that mean "I want to start a
-// project", because keyword scoring alone gets this wrong. For example,
-// "I want to build a website for my business" scores higher on the website
-// intent ("website" + "site") than on booking ("i want"), so it would answer
-// with the website description instead of starting the booking flow. The
-// pre-check catches that first. Only if no booking pattern matches does it
-// fall through to keyword scoring against the knowledge base below.
+// Grounding: when the API is down, the bot decides what the visitor wants
+// in two steps. First it checks BOOKING_PATTERNS, a list of phrases that
+// mean "I want to start a project", because keyword scoring alone gets this
+// wrong. For example, "I want to build a website for my business" scores
+// higher on the website intent ("website" + "site") than on booking
+// ("i want"), so it would answer with the website description instead of
+// starting the booking flow. The pre-check catches that first. Only if no
+// booking pattern matches does it fall through to keyword scoring against
+// the knowledge base below.
 
 const WHATSAPP_NUMBER = "2348153137879";
 const EMAIL = "hello@adekunle.space";
@@ -358,18 +364,47 @@ export function initChatbot() {
     finishBooking(message);
   }
 
-  function handleUserText(text) {
-    const clean = text.trim();
-    if (!clean) return;
-    addMessage(clean, "user");
-    setChips([]);
-    if (booking) {
-      handleBookingAnswer(clean);
-      return;
+  // Conversation history sent to the API, kept to the last 10 turns.
+  let history = [];
+
+  function recordHistory(role, text) {
+    history.push({ role, text });
+    if (history.length > 10) history = history.slice(-10);
+  }
+
+  // Ask the serverless API for a reply. Returns { reply, action } on
+  // success, or null on any failure (network error, non-2xx status, bad
+  // JSON, empty reply, or the 12 second timeout), in which case the caller
+  // falls back to the local replies.
+  async function tryApiReply(text) {
+    try {
+      const controller = new AbortController();
+      const timeout = window.setTimeout(() => controller.abort(), 12000);
+      try {
+        const res = await fetch("/api/chat", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ message: text, history }),
+          signal: controller.signal,
+        });
+        if (!res.ok) return null;
+        const data = await res.json();
+        if (!data || typeof data.reply !== "string" || !data.reply.trim()) return null;
+        return {
+          reply: data.reply.trim(),
+          action: data.action === "start_booking" ? "start_booking" : "none",
+        };
+      } finally {
+        window.clearTimeout(timeout);
+      }
+    } catch {
+      return null;
     }
-    // Booking intent first: a visitor who says they want to build something
-    // is starting a project, not asking for a description. Only then fall
-    // through to keyword scoring.
+  }
+
+  // The original local flow: booking pre-check, then keyword scoring,
+  // then the fallback. Used when the API is unavailable.
+  function localReply(clean) {
     if (isBookingIntent(clean)) {
       startBooking();
       return;
@@ -381,9 +416,38 @@ export function initChatbot() {
     }
     if (intent && intent.answer) {
       botReply(intent.answer);
+      recordHistory("bot", intent.answer);
       return;
     }
     botReply(FALLBACK);
+    recordHistory("bot", FALLBACK);
+  }
+
+  async function handleUserText(text) {
+    const clean = text.trim();
+    if (!clean) return;
+    addMessage(clean, "user");
+    setChips([]);
+    recordHistory("user", clean);
+    if (booking) {
+      handleBookingAnswer(clean);
+      return;
+    }
+    // API first: it understands open questions the keyword replies cannot,
+    // and it decides booking itself via the action it returns.
+    const typing = showTyping();
+    const api = await tryApiReply(clean);
+    typing.remove();
+    if (api) {
+      addMessage(api.reply, "bot");
+      recordHistory("bot", api.reply);
+      setChips(QUICK_REPLIES);
+      if (api.action === "start_booking") {
+        startBooking();
+      }
+      return;
+    }
+    localReply(clean);
   }
 
   function setOpen(open) {
