@@ -4,7 +4,7 @@
 // - gemini: key from GEMINI_API_KEY, model from GEMINI_MODEL
 //   (default gemini-2.5-flash).
 // - groq: key from LLM_API_KEY, model from LLM_MODEL
-//   (default llama-3.3-70b-versatile). Free key, no card, at
+//   (default openai/gpt-oss-120b). Free key, no card, at
 //   https://console.groq.com. Endpoint
 //   https://api.groq.com/openai/v1/chat/completions.
 // - openrouter: key from LLM_API_KEY, model from LLM_MODEL
@@ -31,7 +31,7 @@ const PROVIDERS = {
   groq: {
     label: "Groq",
     url: "https://api.groq.com/openai/v1/chat/completions",
-    model: "llama-3.3-70b-versatile",
+    model: "openai/gpt-oss-120b",
     needsKey: true,
     jsonMode: true,
   },
