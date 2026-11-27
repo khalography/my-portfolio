@@ -1,6 +1,22 @@
-// Vercel serverless function: chat with Gemini for the portfolio bot.
-// The Gemini API key is read from the GEMINI_API_KEY environment variable.
-// It is never in the repo and never in client-side code.
+// Vercel serverless function: chat with an LLM for the portfolio bot.
+//
+// Provider is chosen by LLM_PROVIDER (default "gemini").
+// - gemini: key from GEMINI_API_KEY, model from GEMINI_MODEL
+//   (default gemini-2.5-flash).
+// - groq: key from LLM_API_KEY, model from LLM_MODEL
+//   (default llama-3.3-70b-versatile). Free key, no card, at
+//   https://console.groq.com. Endpoint
+//   https://api.groq.com/openai/v1/chat/completions.
+// - openrouter: key from LLM_API_KEY, model from LLM_MODEL
+//   (default meta-llama/llama-3.3-70b-instruct:free). Free key at
+//   https://openrouter.ai (the :free models cost nothing).
+//   Endpoint https://openrouter.ai/api/v1/chat/completions.
+// - pollinations: no key needed, model from LLM_MODEL (default openai).
+//   Endpoint https://text.pollinations.ai/openai. Note: the no-key tier
+//   is capped per IP per day, so it is a fallback only, not the pick.
+//
+// Keys are read from environment variables only. They are never in the
+// repo and never in client-side code.
 //
 // POST /api/chat with JSON body { message, history }.
 // history is an array of { role: "user" | "bot", text }.
@@ -9,6 +25,31 @@
 // keyword matching so the bot keeps working.
 
 const GEMINI_MODEL = process.env.GEMINI_MODEL || "gemini-2.5-flash";
+
+const PROVIDERS = {
+  gemini: { label: "Gemini", needsKey: true },
+  groq: {
+    label: "Groq",
+    url: "https://api.groq.com/openai/v1/chat/completions",
+    model: "llama-3.3-70b-versatile",
+    needsKey: true,
+    jsonMode: true,
+  },
+  openrouter: {
+    label: "OpenRouter",
+    url: "https://openrouter.ai/api/v1/chat/completions",
+    model: "meta-llama/llama-3.3-70b-instruct:free",
+    needsKey: true,
+    jsonMode: true,
+  },
+  pollinations: {
+    label: "Pollinations",
+    url: "https://text.pollinations.ai/openai",
+    model: "openai",
+    needsKey: false,
+    jsonMode: false,
+  },
+};
 
 const SYSTEM_PROMPT = `You are Adekunle, an independent AI developer based in Lagos, Nigeria. You are chatting with a visitor on your portfolio website. Speak in the first person, as yourself. Be warm, direct and human, like you are texting a potential client. Keep replies short, one to three short paragraphs at most. Use contractions. Do not sound like a corporate assistant.
 
@@ -37,15 +78,44 @@ Rules:
 - Otherwise set action to "none".
 - Always respond with a JSON object with exactly two fields: "reply" (your message to the visitor) and "action" ("none" or "start_booking"). Nothing else.`;
 
+function parseReply(text) {
+  let parsed;
+  try {
+    parsed = JSON.parse(text);
+  } catch {
+    parsed = { reply: text, action: "none" };
+  }
+  const reply = typeof parsed.reply === "string" && parsed.reply.trim() ? parsed.reply.trim() : "";
+  const action = parsed.action === "start_booking" ? "start_booking" : "none";
+  return { reply, action };
+}
+
+async function callWithTimeout(url, options) {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 12000);
+  try {
+    return await fetch(url, { ...options, signal: controller.signal });
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
 export default async function handler(req, res) {
   if (req.method !== "POST") {
     res.status(405).json({ error: "Method not allowed" });
     return;
   }
 
-  const apiKey = process.env.GEMINI_API_KEY;
-  if (!apiKey) {
-    res.status(500).json({ error: "Gemini API key is not configured" });
+  const providerName = (process.env.LLM_PROVIDER || "gemini").toLowerCase();
+  const provider = PROVIDERS[providerName];
+  if (!provider) {
+    res.status(500).json({ error: `Unknown LLM provider: ${providerName}` });
+    return;
+  }
+
+  const apiKey = providerName === "gemini" ? process.env.GEMINI_API_KEY : process.env.LLM_API_KEY;
+  if (provider.needsKey && !apiKey) {
+    res.status(500).json({ error: `${provider.label} API key is not configured` });
     return;
   }
 
@@ -64,24 +134,24 @@ export default async function handler(req, res) {
     return;
   }
 
-  const contents = [];
-  for (const turn of history.slice(-10)) {
-    if (!turn || typeof turn.text !== "string") continue;
-    contents.push({
-      role: turn.role === "bot" ? "model" : "user",
-      parts: [{ text: turn.text }],
-    });
-  }
-  contents.push({ role: "user", parts: [{ text: message }] });
+  let text = "";
 
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${encodeURIComponent(apiKey)}`;
+  if (providerName === "gemini") {
+    const contents = [];
+    for (const turn of history.slice(-10)) {
+      if (!turn || typeof turn.text !== "string") continue;
+      contents.push({
+        role: turn.role === "bot" ? "model" : "user",
+        parts: [{ text: turn.text }],
+      });
+    }
+    contents.push({ role: "user", parts: [{ text: message }] });
 
-  let geminiRes;
-  try {
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 12000);
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${encodeURIComponent(apiKey)}`;
+
+    let geminiRes;
     try {
-      geminiRes = await fetch(url, {
+      geminiRes = await callWithTimeout(url, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -93,52 +163,113 @@ export default async function handler(req, res) {
             maxOutputTokens: 500,
           },
         }),
-        signal: controller.signal,
       });
-    } finally {
-      clearTimeout(timeout);
-    }
-  } catch {
-    res.status(502).json({ error: "Could not reach Gemini" });
-    return;
-  }
-
-  if (!geminiRes.ok) {
-    let detail = "";
-    try {
-      const errBody = await geminiRes.json();
-      detail = typeof errBody?.error?.message === "string" ? errBody.error.message : "";
     } catch {
-      detail = "";
+      res.status(502).json({ error: "Could not reach Gemini" });
+      return;
     }
-    res.status(502).json({
-      error: "Gemini request failed",
-      status: geminiRes.status,
-      detail: detail || "No detail from Gemini",
-    });
-    return;
+
+    if (!geminiRes.ok) {
+      let detail = "";
+      try {
+        const errBody = await geminiRes.json();
+        detail = typeof errBody?.error?.message === "string" ? errBody.error.message : "";
+      } catch {
+        detail = "";
+      }
+      res.status(502).json({
+        error: "Gemini request failed",
+        status: geminiRes.status,
+        detail: detail || "No detail from Gemini",
+      });
+      return;
+    }
+
+    let data;
+    try {
+      data = await geminiRes.json();
+    } catch {
+      res.status(502).json({ error: "Invalid response from Gemini" });
+      return;
+    }
+
+    text = data?.candidates?.[0]?.content?.parts?.map((part) => part.text || "").join("") || "";
+  } else {
+    const model = process.env.LLM_MODEL || provider.model;
+    const messages = [{ role: "system", content: SYSTEM_PROMPT }];
+    for (const turn of history.slice(-10)) {
+      if (!turn || typeof turn.text !== "string") continue;
+      messages.push({
+        role: turn.role === "bot" ? "assistant" : "user",
+        content: turn.text,
+      });
+    }
+    messages.push({ role: "user", content: message });
+
+    const requestBody = {
+      model,
+      messages,
+      temperature: 0.7,
+      max_tokens: 500,
+    };
+    if (provider.jsonMode) {
+      requestBody.response_format = { type: "json_object" };
+    }
+
+    const headers = { "Content-Type": "application/json" };
+    if (apiKey) headers.Authorization = `Bearer ${apiKey}`;
+    if (providerName === "openrouter") {
+      headers["HTTP-Referer"] = "https://adekunle.space";
+      headers["X-Title"] = "Adekunle portfolio bot";
+    }
+
+    let providerRes;
+    try {
+      providerRes = await callWithTimeout(provider.url, {
+        method: "POST",
+        headers,
+        body: JSON.stringify(requestBody),
+      });
+    } catch {
+      res.status(502).json({ error: `Could not reach ${provider.label}` });
+      return;
+    }
+
+    if (!providerRes.ok) {
+      let detail = "";
+      try {
+        const errBody = await providerRes.json();
+        detail =
+          typeof errBody?.error?.message === "string"
+            ? errBody.error.message
+            : typeof errBody?.error === "string"
+              ? errBody.error
+              : "";
+      } catch {
+        detail = "";
+      }
+      res.status(502).json({
+        error: `${provider.label} request failed`,
+        status: providerRes.status,
+        detail: detail || `No detail from ${provider.label}`,
+      });
+      return;
+    }
+
+    let data;
+    try {
+      data = await providerRes.json();
+    } catch {
+      res.status(502).json({ error: `Invalid response from ${provider.label}` });
+      return;
+    }
+
+    text = data?.choices?.[0]?.message?.content || "";
   }
 
-  let data;
-  try {
-    data = await geminiRes.json();
-  } catch {
-    res.status(502).json({ error: "Invalid response from Gemini" });
-    return;
-  }
-
-  const text = data?.candidates?.[0]?.content?.parts?.map((part) => part.text || "").join("") || "";
-  let parsed;
-  try {
-    parsed = JSON.parse(text);
-  } catch {
-    parsed = { reply: text, action: "none" };
-  }
-
-  const reply = typeof parsed.reply === "string" && parsed.reply.trim() ? parsed.reply.trim() : "";
-  const action = parsed.action === "start_booking" ? "start_booking" : "none";
+  const { reply, action } = parseReply(text);
   if (!reply) {
-    res.status(502).json({ error: "Empty response from Gemini" });
+    res.status(502).json({ error: `Empty response from ${provider.label}` });
     return;
   }
 
